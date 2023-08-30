@@ -1,7 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment} from 'react'
+import { useSelector } from 'react-redux'
 
 export default function Modal({isOpen, setIsOpen, title, children}) {
+
+
   
 
   function closeModal() {

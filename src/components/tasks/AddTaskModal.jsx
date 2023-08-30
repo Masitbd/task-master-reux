@@ -1,13 +1,24 @@
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector} from "react-redux";
+import { addTask } from "../../redux/features/tasks/tasksSlice";
 import Modal from "../Model";
 
 
 const AddTaskModal = ({isOpen, setIsOpen}) => {
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-   
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+    const dispatch = useDispatch()
+    //const {name} = useSelector(state => state.tasks)
+    
     const onSubmit = data => {
+        dispatch(addTask(data))
         console.log(data);
+        onCalcel()
+    }
+
+    const onCalcel =()=>{
+        reset()
+        setIsOpen(false)
     }
    /* 
    add react hook form and tailwindcss-forms
@@ -46,7 +57,7 @@ const AddTaskModal = ({isOpen, setIsOpen}) => {
             </select>
         </div>
         <div  className="flex flex-row gap-1 justify-end mt-3 mr-1">
-        <button type="button" className="btn btn-danger mr-1">cancel</button>    
+        <button onClick={()=>onCalcel()} type="button" className="btn btn-danger mr-1">Cancel</button>    
         <button type="submit" className="btn btn-primary">Submit</button>
         </div>
             

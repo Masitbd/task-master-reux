@@ -3,10 +3,18 @@ import { useState } from 'react';
 import AddTaskModal from '../components/tasks/AddTaskModal';
 import MyTasks from '../components/tasks/MyTasks';
 import TaskCard from '../components/tasks/TaskCard';
+import { useSelector } from 'react-redux';
+
 
 const Tasks = () => {
 const [isOpen, setIsOpen] = useState(false)
-  return (
+const {tasks} = useSelector(state => state.tasksSlice)
+// tasksSlice come from redux store
+console.log('My tasks', tasks)  
+
+
+
+return (
     <div className="h-screen grid grid-cols-12">
       <div className="col-span-9 px-10 pt-10">
         <div className="flex justify-between items-center">
@@ -40,7 +48,9 @@ const [isOpen, setIsOpen] = useState(false)
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
+             {tasks.map((task) => (
+              <TaskCard task={task}  key={task.id}/>
+             ))}
             </div>
           </div>
           <div className="relative h-[800px] overflow-auto">
@@ -51,8 +61,9 @@ const [isOpen, setIsOpen] = useState(false)
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
-              <TaskCard />
+            {tasks.map((task) => {
+            return  <TaskCard  task={task}   key={task.id}/>
+             })}
             </div>
           </div>
           <div className="relative h-[800px] overflow-auto">
@@ -63,7 +74,9 @@ const [isOpen, setIsOpen] = useState(false)
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
+            {tasks.map((task) => {
+            return <TaskCard  task={task}  key={task.id}/> 
+             })}
             </div>
           </div>
         </div>
