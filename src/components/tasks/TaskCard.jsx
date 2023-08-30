@@ -1,8 +1,9 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { useDispatch } from 'react-redux';
+import { removeTask, updateStatus } from '../../redux/features/tasks/tasksSlice';
 
 const TaskCard = ({task}) => {
-  console.log('chexk task',task);
-
+ const dispatch = useDispatch()
   return (
     <div className="bg-secondary/10 rounded-md p-5">
       <h1
