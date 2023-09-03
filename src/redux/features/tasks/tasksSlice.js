@@ -13,7 +13,8 @@ const initialState = {
             assignedTo: 'Mir Hussain',
             priority: 'high',
           }
-    ]
+    ],
+    userSpecificTasks:[]
 }
 
 const taskSlice = createSlice({
@@ -25,24 +26,29 @@ const taskSlice = createSlice({
        
        addTask: (state, {payload})=>{
        if (state.tasks.length=== 0){
-        state.tasks.push({id:1, ...payload})
+        state.tasks.push({id:1,status: 'pending', ...payload})
        }
        else{
        // state.tasks.push({id: state.tasks.length +1 , ...payload})
        const lastElement = state.tasks.at(-1) // retuen array length
-       state.tasks.push({id: lastElement.id +1, ...payload})
+       state.tasks.push({id: lastElement.id +1,status: 'pending', ...payload})
        } 
        
         },
         removeTask: (state, {payload})=>{
-         state.tasks.filter(item=> item.id !==payload)
+         state.tasks=state.tasks.filter(item=> item.id !==payload)
         },
         updateStatus:(state, {payload})=>{
-         const target =    state.tasks.find((item)=>item.id===payload.id)
+         const target =    state.tasks.find((item)=>item.id === payload.id)
          target.status = payload.status
+        },
+        userTasks:(state, {payload})=>{
+          console.log(payload)
+         state.userSpecificTasks = state.tasks.filter(item=>item.assignedTo === payload &&
+          (item.status==='pending' || item.status==='running'))
         }
     }
 })
 
-export const {addTask, removeTask, updateStatus} = taskSlice.actions
+export const {addTask, removeTask, updateStatus, userTasks} = taskSlice.actions
 export default  taskSlice.reducer

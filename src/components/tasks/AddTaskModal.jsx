@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch} from "react-redux";
 import { addTask } from "../../redux/features/tasks/tasksSlice";
 import Modal from "../Model";
 
@@ -28,7 +28,7 @@ const AddTaskModal = ({isOpen, setIsOpen}) => {
        <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-1">
             <label htmlFor='tilte'>Tilte</label>
-        <input className="w-full rounded-md" type="text" id='title' {...register('name')} />
+        <input className="w-full rounded-md" type="text" id='title' {...register('title')} />
         </div>
         <div className="flex flex-col gap-1">
             <label htmlFor='tilte'>Description</label>
@@ -40,7 +40,7 @@ const AddTaskModal = ({isOpen, setIsOpen}) => {
         </div>
         <div className="flex flex-col gap-1">
             <label htmlFor='tilte'>AssignTo</label>
-            <select className="w-full rounded-md" id='assignTo' {...register("assignTo")}>
+            <select className="w-full rounded-md" id='assignedTo' {...register("assignedTo")}>
                 <option value="Mamun">Mamun</option>
                 <option value="Shafiquel">Shafiquel</option>
                 <option value="Kamrul">Kamrul</option>
