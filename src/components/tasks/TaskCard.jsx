@@ -22,7 +22,7 @@ const TaskCard = ({task}) => {
           task.priority === 'low' ? 'text-green-500' : ''
         }`}
       >
-        {task?.name}
+        {task?.title}
       </h1>
       <p className="mb-3">{task?.description}</p>
       <p className="text-sm">Assigned to - {task?.assignTo}</p>

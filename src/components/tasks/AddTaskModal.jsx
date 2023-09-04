@@ -6,7 +6,7 @@ import Modal from "../Model";
 
 const AddTaskModal = ({isOpen, setIsOpen}) => {
 
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const dispatch = useDispatch()
     //const {name} = useSelector(state => state.tasks)
     

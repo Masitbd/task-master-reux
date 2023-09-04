@@ -2,12 +2,14 @@ import {
   CheckIcon,
   DocumentMagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userTasks } from '../../redux/features/tasks/tasksSlice';
+import { updateStatus, userTasks } from '../../redux/features/tasks/tasksSlice';
+import TaskDetailsModal from './TaskDetailsModal';
 
 const MyTasks = () => {
-  const item = {
+  /* const item = {
     id: 1,
     status: 'pending',
     title: 'Remove Button',
@@ -16,13 +18,22 @@ const MyTasks = () => {
     date: '2023-08-28',
     assignedTo: 'Mir Hussain',
     priority: 'high',
-  };
+  }; */
   
   const {tasks, userSpecificTasks} = useSelector((state) => state.tasksSlice)
   const {name} = useSelector(state=>state.userSlice)
+  const [isOpen, setIsOpen] = useState(false)
+  const [taskId, setTaskId] = useState(0);
   const dispatch = useDispatch()
 
-  console.log(tasks)
+
+
+  const handleDetails = (id) => {
+    setTaskId(id);
+    
+    setIsOpen(!isOpen);
+  };
+
   
    useEffect(()=>{
     dispatch(userTasks(name))
@@ -30,6 +41,8 @@ const MyTasks = () => {
 
   return (
     <div>
+      <TaskDetailsModal isOpen={isOpen} setIsOpen={setIsOpen} taskId={taskId} />
+ 
       <h1 className="text-xl my-3">My Tasks</h1>
       <div className=" h-[750px] overflow-auto space-y-3">
         {
@@ -40,10 +53,10 @@ const MyTasks = () => {
           >
             <h1>{item.title}</h1>
             <div className="flex gap-3">
-              <button className="grid place-content-center" title="Details">
+              <button   onClick={() => handleDetails(item.id)} className="grid place-content-center" title="Details">
                 <DocumentMagnifyingGlassIcon className="w-5 h-5 text-primary" />
               </button>
-              <button className="grid place-content-center" title="Done">
+              <button onClick={()=>dispatch(updateStatus({id: item.id, status:'done'}))}  className="grid place-content-center" title="Done">
                 <CheckIcon className="w-5 h-5 text-primary" />
               </button>
             </div>
